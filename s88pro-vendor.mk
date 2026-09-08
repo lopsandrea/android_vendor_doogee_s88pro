@@ -23,9 +23,10 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_PACKAGES += \
+    libfmjni \
     libmediatek_exceptionlog \
-    libmtk_vt_wrapper \
     libmtkperf_client \
+    libmtk_vt_wrapper \
     libvcodec_cap \
     libvcodec_capenc \
     mediatek-res \

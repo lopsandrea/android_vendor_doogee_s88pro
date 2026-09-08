@@ -88,4 +88,17 @@ LOCAL_STRIP_MODULE := false
 LOCAL_CHECK_ELF_FILES := false
 include $(BUILD_PREBUILT)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := libfmjni
+LOCAL_MODULE_OWNER := doogee
+LOCAL_SRC_FILES_64 := proprietary/system/lib64/libfmjni.so
+LOCAL_SRC_FILES_32 := proprietary/system/lib/libfmjni.so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MULTILIB := both
+LOCAL_MODULE_TAGS := optional
+LOCAL_STRIP_MODULE := false
+LOCAL_CHECK_ELF_FILES := false
+include $(BUILD_PREBUILT)
+
 endif
