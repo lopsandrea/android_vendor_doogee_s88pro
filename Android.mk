@@ -10,10 +10,11 @@ LOCAL_MODULE_OWNER := doogee
 LOCAL_SRC_FILES := proprietary/system/framework/mediatek-res.apk
 LOCAL_MODULE_CLASS := APPS
 LOCAL_MODULE_SUFFIX := .apk
-LOCAL_CERTIFICATE := platform
-LOCAL_PRIVILEGED_MODULE := true
+LOCAL_CERTIFICATE := PRESIGNED
+
 LOCAL_MODULE_TAGS := optional
 LOCAL_DEX_PREOPT := false
+
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -100,5 +101,80 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STRIP_MODULE := false
 LOCAL_CHECK_ELF_FILES := false
 include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := SensorHub
+LOCAL_MODULE_OWNER := doogee
+LOCAL_SRC_FILES := proprietary/vendor/app/SensorHub/SensorHub.apk
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_SUFFIX := .apk
+LOCAL_CERTIFICATE := PRESIGNED
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_DEX_PREOPT := false
+LOCAL_PROPRIETARY_MODULE := true
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := FrameworkResOverlay
+LOCAL_MODULE_OWNER := doogee
+LOCAL_SRC_FILES := proprietary/vendor/overlay/FrameworkResOverlay/FrameworkResOverlay.apk
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_SUFFIX := .apk
+LOCAL_CERTIFICATE := PRESIGNED
+LOCAL_MODULE_TAGS := optional
+LOCAL_DEX_PREOPT := false
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := framework-res__auto_generated_rro_vendor
+LOCAL_MODULE_OWNER := doogee
+LOCAL_SRC_FILES := proprietary/vendor/overlay/framework-res__auto_generated_rro_vendor.apk
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_SUFFIX := .apk
+LOCAL_CERTIFICATE := PRESIGNED
+LOCAL_MODULE_TAGS := optional
+LOCAL_DEX_PREOPT := false
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay
+include $(BUILD_PREBUILT)
+
+# I collegamenti simbolici del vendor di fabbrica.
+#
+# Un elenco di file non li esprime, e copiare due volte il contenuto sarebbe
+# uno spreco: vulkan punta a libGLES_mali.so, che da sola pesa piu' di venti
+# megabyte. Non si puo' nemmeno usare BUILD_PHONY_PACKAGE, che con
+# LOCAL_PROPRIETARY_MODULE si ferma con
+#   error: unhandled install path "TARGET_OUT_VENDOR_FAKE"
+# perche' un pacchetto finto non ha un posto dove installarsi. Restano le
+# regole diritte, che e' poi come fanno gli altri device tree.
+
+S88PRO_SYMLINKS :=
+
+define s88pro-collegamento
+S88PRO_SYMLINKS += $(2)
+$(2):
+	@mkdir -p $$(dir $$@)
+	$$(hide) ln -sf $(1) $$@
+endef
+
+$(eval $(call s88pro-collegamento,libSoftGatekeeper.so,$(TARGET_OUT_VENDOR)/lib/hw/gatekeeper.default.so))
+$(eval $(call s88pro-collegamento,libSoftGatekeeper.so,$(TARGET_OUT_VENDOR)/lib64/hw/gatekeeper.default.so))
+$(eval $(call s88pro-collegamento,gatekeeper.trustkernel.so,$(TARGET_OUT_VENDOR)/lib/hw/gatekeeper.mt6771.so))
+$(eval $(call s88pro-collegamento,gatekeeper.trustkernel.so,$(TARGET_OUT_VENDOR)/lib64/hw/gatekeeper.mt6771.so))
+$(eval $(call s88pro-collegamento,gatekeeper.trustkernel.so,$(TARGET_OUT_VENDOR)/lib/hw/gatekeeper.e977_dg_m13_71_q0.so))
+$(eval $(call s88pro-collegamento,gatekeeper.trustkernel.so,$(TARGET_OUT_VENDOR)/lib64/hw/gatekeeper.e977_dg_m13_71_q0.so))
+$(eval $(call s88pro-collegamento,kmsetkey.trustkernel.so,$(TARGET_OUT_VENDOR)/lib/hw/kmsetkey.mt6771.so))
+$(eval $(call s88pro-collegamento,kmsetkey.trustkernel.so,$(TARGET_OUT_VENDOR)/lib64/hw/kmsetkey.mt6771.so))
+$(eval $(call s88pro-collegamento,/vendor/lib/egl/libGLES_mali.so,$(TARGET_OUT_VENDOR)/lib/hw/vulkan.mt6771.so))
+$(eval $(call s88pro-collegamento,/vendor/lib64/egl/libGLES_mali.so,$(TARGET_OUT_VENDOR)/lib64/hw/vulkan.mt6771.so))
+$(eval $(call s88pro-collegamento,/vendor/lib64/libem_sensor_jni.so,$(TARGET_OUT_VENDOR)/app/SensorHub/lib/arm64/libem_sensor_jni.so))
+# Nota: /vendor/bin/bc esiste anche di fabbrica come collegamento a
+# toybox_vendor, ma non va rifatto qui -- lo crea gia' AOSP, e ridefinirlo da'
+#   error: overriding commands for target .../vendor/bin/bc
+
+ALL_DEFAULT_INSTALLED_MODULES += $(S88PRO_SYMLINKS)
 
 endif
