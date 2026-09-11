@@ -1,31 +1,31 @@
-File proprietari per DOOGEE S88 Pro (s88pro)
-============================================
+Proprietary files for DOOGEE S88 Pro (s88pro)
+=============================================
 
-I blob estratti dalla ROM di fabbrica, necessari a far funzionare il
-dispositivo con LineageOS.
+The blobs extracted from the stock ROM, needed to make the device work with
+LineageOS.
 
-Da dove vengono
----------------
+Where they come from
+--------------------
 
-Dalla ROM DOOGEE di fabbrica, Android 10:
+From the stock DOOGEE ROM, Android 10:
 
     DOOGEE/S88Pro_EEA/S88Pro:10/QP1A.190711.020/1592876742:user/release-keys
 
-Come rigenerare
----------------
+How to regenerate them
+----------------------
 
-Con il dispositivo collegato e `adb` attivo, dall'albero del device:
+With the device connected and `adb` up, from the device tree:
 
     device/doogee/s88pro/extract-files.sh
     device/doogee/s88pro/setup-makefiles.sh
 
-`proprietary-files.txt` elenca cosa viene preso; `Android.mk` e
-`s88pro-vendor.mk` sono **generati** da `setup-makefiles.sh` e non vanno
-modificati a mano.
+`proprietary-files.txt` lists what is taken; `Android.mk` and
+`s88pro-vendor.mk` are **generated** by `setup-makefiles.sh` and must not be
+edited by hand.
 
-Una nota sulla versione
------------------------
+A note on versions
+------------------
 
-Questi blob sono di Android 10 e girano sotto un sistema Android 14. Funziona,
-con un limite noto: la registrazione video dall'app fotocamera di LineageOS
-(vedi il README del device tree).
+These blobs are from Android 10 and run under an Android 13 system. It works,
+with one known limitation: video recording from the LineageOS camera app (see
+the device tree README).
