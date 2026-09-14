@@ -7,18 +7,16 @@ PRODUCT_SOONG_NAMESPACES += \
 
 PRODUCT_COPY_FILES += \
     vendor/doogee/s88pro/proprietary/system/etc/permissions/com.mediatek.wfo.legacy.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.mediatek.wfo.legacy.xml \
-    vendor/doogee/s88pro/proprietary/system/etc/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
-    vendor/doogee/s88pro/proprietary/system/lib64/libmediatek_exceptionlog.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmediatek_exceptionlog.so \
-    vendor/doogee/s88pro/proprietary/system/lib64/libmtk_vt_wrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtk_vt_wrapper.so \
-    vendor/doogee/s88pro/proprietary/system/lib64/libmtkperf_client.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtkperf_client.so \
-    vendor/doogee/s88pro/proprietary/system/lib64/libvcodec_cap.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libvcodec_cap.so \
-    vendor/doogee/s88pro/proprietary/system/lib64/libvcodec_capenc.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libvcodec_capenc.so \
-    vendor/doogee/s88pro/proprietary/system/lib64/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
+    vendor/doogee/s88pro/proprietary/system/etc/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml
 
 PRODUCT_PACKAGES += \
-    libfmjni \
+    libmediatek_exceptionlog \
+    libmtk_vt_wrapper \
+    libmtkperf_client \
+    libvcodec_cap \
+    libvcodec_capenc \
+    vendor.mediatek.hardware.videotelephony@1.0 \
     mediatek-res \
-    mtk-ims-compat \
     mediatek-common \
     mediatek-framework-net \
     mediatek-framework \
@@ -30,4 +28,5 @@ PRODUCT_PACKAGES += \
     mediatek-telecom-common \
     mediatek-telephony-base \
     mediatek-telephony-common \
-    mediatek-wfo-legacy
+    mediatek-wfo-legacy \
+    mtk-ims-compat
